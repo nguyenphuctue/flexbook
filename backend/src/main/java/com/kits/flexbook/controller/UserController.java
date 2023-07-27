@@ -20,10 +20,10 @@ public class UserController {
         return userRepository.findAll();
     }
 
-    @GetMapping("/login")
-    public User doLogin(@RequestParam String username, @RequestParam String password){
+    @PostMapping("/login")
+    public User doLogin(@RequestBody FormLogin formLogin){
         for(User user : userRepository.findAll()){
-            if(user.getUsername().equals(username) && user.getPassword().equals(password)){
+            if(user.getUsername().equals(formLogin.getUsername()) && user.getPassword().equals(formLogin.getPassword())){
                 System.out.println("success");
                 return user;
             }
