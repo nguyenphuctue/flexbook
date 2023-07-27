@@ -1,11 +1,57 @@
+import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 function Login() {
     const history = useHistory();
+    const [username, setUsername] = useState();
+    const [password, setPassword] = useState();
 
-    function doLogin(){
-        console.log("login")
-        history.push("/");
+    function getUsername(e){
+        setUsername(e.target.value);
+    }
+
+    function getPassword(e){
+        setPassword(e.target.value);
+    }
+
+    function doLogin() {
+        // fetch("http://localhost:8080/user/login", {
+        //     mode: 'no-cors',
+        //     headers: {
+        //         "Content-Type": "application/json",
+        //         // "Access-Control-Allow-Origin": "*",
+        //         // "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
+        //     },
+        //     method: "POST",
+        //     body: JSON.stringify({
+        //         username: username,
+        //         password: password,
+        //     }),
+        // })
+        //     .then((response) => console.log(response))
+        //     .then((data) => {
+        //         console.log(data);
+        //         history.push("/");
+        //     });
+
+            fetch("http://localhost:8080/user", {
+                mode: 'no-cors',
+                headers: {
+                    "Content-Type": "application/json",
+                    // "Access-Control-Allow-Origin": "*",
+                    // "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
+                },
+                method: "GET",
+                // body: JSON.stringify({
+                //     username: username,
+                //     password: password,
+                // }),
+            })
+                .then((response) => response.json())
+                .then((data) => {
+                    console.log(data);
+                    history.push("/");
+                });
     }
 
     return (
@@ -32,13 +78,15 @@ function Login() {
                                     type="email"
                                     className="form-control my-3"
                                     placeholder="Email address or phone number"
+                                    onChange={getUsername}
                                 />
                                 <input
                                     type="password"
                                     className="form-control my-3"
                                     placeholder="Password"
+                                    onChange={getPassword}
                                 />
-                                    <button className="btn btn-primary w-100 my-3" onClick={doLogin} type="submit"> Log In</button>
+                                <button className="btn btn-primary w-100 my-3" onClick={doLogin} type="submit"> Log In</button>
                                 <a href="#" className="text-decoration-none text-center">
                                     <p>Forgotten password?</p>
                                 </a>
