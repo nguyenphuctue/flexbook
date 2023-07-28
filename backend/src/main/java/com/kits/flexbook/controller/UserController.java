@@ -3,6 +3,7 @@ package com.kits.flexbook.controller;
 import com.kits.flexbook.model.User;
 import com.kits.flexbook.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -16,20 +17,27 @@ public class UserController {
     private UserRepository userRepository;
 
     @GetMapping
-    public List<User> getAllUsers(){
-        return userRepository.findAll();
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public ResponseEntity<List<User>> getAllUsers(){
+        return ResponseEntity.ok()
+                .body(userRepository.findAll());
     }
 
     @PostMapping("/login")
-    public User doLogin(@RequestBody FormLogin formLogin){
+    @CrossOrigin(origins = "*", allowedHeaders = "*")
+    public ResponseEntity<User> doLogin(@RequestBody FormLogin formLogin){
         for(User user : userRepository.findAll()){
             if(user.getUsername().equals(formLogin.getUsername()) && user.getPassword().equals(formLogin.getPassword())){
                 System.out.println("success");
-                return user;
+                return ResponseEntity.ok()
+                        .header("Access-Control-Allow-Origin", "*")
+                        .body(user);
             }
         }
 
-        return null;
+        return ResponseEntity.ok()
+                .header("Access-Control-Allow-Origin", "*")
+                .body(null);
     }
 
 }

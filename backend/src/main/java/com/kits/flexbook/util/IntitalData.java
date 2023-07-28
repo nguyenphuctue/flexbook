@@ -36,11 +36,14 @@ public class IntitalData implements CommandLineRunner {
         );
         Timestamp createdAt = new Timestamp(date.getTime());
 
+        userRepository.save(new User(1L,"tuenp", "abcd@123", "1", null, "this is bio", createdAt, createdAt));
+
         for (int i = 0; i < 10; i++) {
             User user = new User();
             user.setUsername(faker.name().username());
             user.setEmail(faker.internet().emailAddress());
             user.setPassword(faker.internet().password());
+            user.setProfilePicture("https://images.unsplash.com/photo-1688389244936-97e9874ec347?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=MnwxfDB8MXxyYW5kb218MHx8fHx8fHx8MTY5MDQ1Njc3OQ&ixlib=rb-4.0.3&q=80&w=1080");
             user.setBio(faker.lorem().sentence());
             user.setCreatedAt(createdAt);
             user.setUpdatedAt(createdAt);
