@@ -1,7 +1,7 @@
 function Feed() {
     return (
         <>
-            <div class="bg-gray postion-relative">
+            <div className="bg-gray postion-relative">
 
                 <>
                     {/* ================= Appbar ================= */}
@@ -63,7 +63,6 @@ function Feed() {
                                                     type="text"
                                                     className="rounded-pill border-0 bg-gray dropdown-item"
                                                     placeholder="Search Flexbook..."
-                                                    autofocus=""
                                                 />
                                             </li>
                                             {/* search 1 */}
@@ -3438,7 +3437,7 @@ function Feed() {
                                                             <p className="text-muted">
                                                                 Shortcuts provide quick access to what you do most on
                                                                 Facebook. Your Shortcuts are sorted automatically, but
-                                                                you can pin something so it's always shown at the top or
+                                                                you can pin something so it is always shown at the top or
                                                                 hide it from the list.
                                                             </p>
                                                             {/* Search */}
