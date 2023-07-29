@@ -18,26 +18,20 @@ public class UserController {
 
     @GetMapping
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    public ResponseEntity<List<User>> getAllUsers(){
+    public ResponseEntity<List<User>> getAllUsers() {
         return ResponseEntity.ok()
                 .body(userRepository.findAll());
     }
 
     @PostMapping("/login")
     @CrossOrigin(origins = "*", allowedHeaders = "*")
-    public ResponseEntity<User> doLogin(@RequestBody FormLogin formLogin){
-        for(User user : userRepository.findAll()){
-            if(user.getUsername().equals(formLogin.getUsername()) && user.getPassword().equals(formLogin.getPassword())){
-                System.out.println("success");
-                return ResponseEntity.ok()
-                        .header("Access-Control-Allow-Origin", "*")
-                        .body(user);
+    public ResponseEntity<User> doLogin(@RequestBody FormLogin formLogin) {
+        for (User user : userRepository.findAll()) {
+            if (user.getUsername().equals(formLogin.getUsername()) && user.getPassword().equals(formLogin.getPassword())) {
+                return ResponseEntity.ok().body(user);
             }
         }
-
-        return ResponseEntity.ok()
-                .header("Access-Control-Allow-Origin", "*")
-                .body(null);
+        return ResponseEntity.ok().body(null);
     }
 
 }
