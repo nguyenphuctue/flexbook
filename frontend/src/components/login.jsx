@@ -16,40 +16,45 @@ function Login() {
 
   function doLogin() {
     fetch("http://localhost:8080/user/login", {
-        mode: 'no-cors',
-        headers: {
+      mode: "cors",
+      headers: {
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Access-Control-Allow-Credentials": true,
+        "Access-Control-Allow-Headers":
+          "Origin, X-Requested-With, Content-Type, Accept",
+      },
+      method: "POST",
+      body: JSON.stringify({
+        username: username,
+        password: password,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        console.log(data);
+        sessionStorage.setItem("user", JSON.stringify(data));
+        sessionStorage.setItem("isAuthenticated", "true");
+        history.push("/");
+
+        fetch("http://localhost:8080/post/" + data['userId'], {
+          mode: "cors",
+          headers: {
             "Content-Type": "application/json",
             "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Headers": "Origin, X-Requested-With, Content-Type, Accept"
-        },
-        method: "POST",
-        body: JSON.stringify({
-            username: username,
-            password: password,
-        }),
-    })
-        .then((response) => console.log(response))
-        .then((data) => {
-            console.log(data);
-            history.push("/");
-        });
+            "Access-Control-Allow-Credentials": true,
+            "Access-Control-Allow-Headers":
+              "Origin, X-Requested-With, Content-Type, Accept",
+          },
+          method: "GET",
+        })
+          .then((response) => response.json())
+          .then((data) => {
+            console.log("data",data);
+            sessionStorage.setItem("postOfUser", JSON.stringify(data));
+          });
+      });
 
-    // fetch("http://localhost:8080/user", {
-    //   mode: "cors",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //     "Access-Control-Allow-Origin": "*",
-    //     "Access-Control-Allow-Credentials": true,
-    //     "Access-Control-Allow-Headers":
-    //       "Origin, X-Requested-With, Content-Type, Accept",
-    //   },
-    //   method: "GET",
-    // })
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log(data);
-    //     history.push("/");
-    //   });
   }
 
   return (
